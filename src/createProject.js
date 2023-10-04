@@ -10,6 +10,10 @@ class Project {
   addTodo(todo) {
     this.todos.push(todo);
   }
+
+  setNewTodos(todos) {
+    this.todos = todos;
+  }
 }
 
 function createProject(title) {
