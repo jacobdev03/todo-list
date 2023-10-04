@@ -30,6 +30,7 @@ function createTodoDiv(todo, index) {
   deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
 
   deleteBtn.addEventListener('click', (e) => handleDelete(e, todo.project));
+  editBtn.addEventListener('click', (e) => handleEdit(e, todo));
 
   if (todo.isCompleted) {
     circle.classList.toggle('fa-circle-check');
@@ -54,6 +55,34 @@ function createTodoDiv(todo, index) {
   return todoDiv;
 }
 
+function editForm(title, date, todo) {
+  const formContainer = document.querySelector('.form-container');
+  formContainer.innerHTML = '';
+  formContainer.style.display = 'block';
+  const form = document.createElement('form');
+  const textInput = document.createElement('input');
+  const dateInput = document.createElement('input');
+  const button = document.createElement('button');
+  button.textContent = 'Edit';
+  textInput.value = title;
+  dateInput.value = date;
+
+  dateInput.type = 'date';
+  form.appendChild(textInput);
+  form.appendChild(dateInput);
+  form.appendChild(button);
+  formContainer.classList.add('form-container');
+  formContainer.appendChild(form);
+  document.body.appendChild(formContainer);
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    todo.editTodo(textInput.value, dateInput.value);
+    formContainer.style.display = 'none';
+    displayTodos(todo.project.listTodos(), todo.project);
+  });
+}
+
 function handleDelete(e, todoProject) {
   console.log(todoProject);
   console.log(e.currentTarget.parentElement.id);
@@ -68,4 +97,10 @@ function handleDelete(e, todoProject) {
   });
 
   displayTodos(todoProject.listTodos(), todoProject);
+}
+
+function handleEdit(e, todo) {
+  const title = e.currentTarget.parentElement.children[1].children[0].textContent;
+  const date = e.currentTarget.parentElement.children[1].children[1].textContent;
+  editForm(title, date, todo);
 }
