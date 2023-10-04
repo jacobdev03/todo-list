@@ -1,4 +1,5 @@
 import todoForm from './todoForm';
+import { projects } from './index';
 
 export default function displayTodos(todos, project) {
   const todoContainer = document.querySelector('.todo-container');
@@ -13,26 +14,58 @@ export default function displayTodos(todos, project) {
 function createTodoDiv(todo, index) {
   const todoDiv = document.createElement('div');
   const circle = document.createElement('i');
-  const todoText = document.createElement('p');
-  todoText.textContent = todo.title;
+  const editBtn = document.createElement('button');
+  const deleteBtn = document.createElement('button');
+  const textDiv = document.createElement('div');
+  const titleText = document.createElement('h3');
+  const dueDateText = document.createElement('p');
+  titleText.textContent = todo.title;
+  dueDateText.textContent = todo.dueDate;
+  textDiv.appendChild(titleText);
+  textDiv.appendChild(dueDateText);
   todoDiv.classList.add('todo');
+  textDiv.classList.add('todo-info');
   circle.classList.add('fa-regular');
+  editBtn.innerHTML = '<i class="fa-regular fa-pen-to-square"></i>';
+  deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
+
+  deleteBtn.addEventListener('click', (e) => handleDelete(e, todo.project));
 
   if (todo.isCompleted) {
     circle.classList.toggle('fa-circle-check');
-    todoText.classList.toggle('cross-line');
+    textDiv.classList.toggle('cross-line');
   } else {
     circle.classList.toggle('fa-circle');
   }
-  todoDiv.addEventListener('click', () => {
+  circle.addEventListener('click', () => {
     circle.classList.toggle('fa-circle');
     circle.classList.toggle('fa-circle-check');
-    todoText.classList.toggle('cross-line');
+    textDiv.classList.toggle('cross-line');
     todo.toggleCompleted();
   });
 
   todoDiv.appendChild(circle);
-  todoDiv.appendChild(todoText);
+
+  todoDiv.appendChild(textDiv);
+  todoDiv.appendChild(editBtn);
+  todoDiv.appendChild(deleteBtn);
+  todoDiv.id = index;
 
   return todoDiv;
+}
+
+function handleDelete(e, todoProject) {
+  console.log(todoProject);
+  console.log(e.currentTarget.parentElement.id);
+
+  const deleteTodo = todoProject
+    .listTodos()
+    .find((todo, index) => index == e.currentTarget.parentElement.id);
+
+  projects.forEach((proj) => {
+    const newTodos = proj.listTodos().filter((todo) => todo !== deleteTodo);
+    proj.setNewTodos(newTodos);
+  });
+
+  displayTodos(todoProject.listTodos(), todoProject);
 }
