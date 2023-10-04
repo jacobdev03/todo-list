@@ -1,5 +1,5 @@
 class Todo {
-  constructor(title, description, dueDate, priority, isCompleted = false, project = 'all') {
+  constructor(title, description, dueDate, priority, isCompleted = false, project) {
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
@@ -11,9 +11,14 @@ class Todo {
   toggleCompleted() {
     this.isCompleted = !this.isCompleted;
   }
+
+  editTodo(newTitle, newDate) {
+    this.title = newTitle;
+    this.dueDate = newDate;
+  }
 }
 
-function createTodo(title, description, dueDate, priority, isCompleted = false, project = 'all') {
+function createTodo(title, description, dueDate, priority, isCompleted = false, project) {
   return new Todo(title, description, dueDate, priority, isCompleted, project);
 }
 
