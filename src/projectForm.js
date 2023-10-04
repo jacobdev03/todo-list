@@ -28,6 +28,7 @@ function handleCreate(e) {
     return;
   }
   const newProject = createProject(e.target[1].value);
+  console.log(newProject);
   projects.push(newProject);
 
   displayNav(projects);
