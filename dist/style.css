@@ -30,12 +30,67 @@ nav div {
 .side-bar {
   height: 100%;
   background-color: rgb(231, 231, 231);
+  display: flex;
+  flex-direction: column;
 }
 
 .todo-container {
   display: flex;
+  flex-direction: column;
 
   align-items: center;
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
+}
+
+.cross-line {
+  text-decoration: line-through;
+}
+
+.todo {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  gap: 5px;
+  border-bottom: 1px solid rgb(226, 226, 226);
+  width: 100%;
+}
+
+.todo-info {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
+.edit-btn {
+  justify-self: flex-end;
+}
+
+.addTodoForm input {
+  border: 0;
+  margin: 1em 0;
+}
+
+.addTodoForm {
+  display: flex;
+  flex-direction: row;
+}
+
+.addTodoForm button {
+  border: none; /* Remove borders */
+  color: red;
+  background-color: transparent;
+  font-size: 20px;
+
+  cursor: pointer; /* Mouse pointer on hover */
+}
+
+.form-container {
+  display: none;
+  padding: 10px;
+  background: rgb(226, 226, 226);
+  position: absolute;
+  top: 50%;
+  left: 50%;
 }
